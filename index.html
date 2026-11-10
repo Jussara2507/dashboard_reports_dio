@@ -21,32 +21,36 @@
         h1 { font-size: 26px; font-weight: 600; color: var(--text-main); }
         .subtitle { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
         
-        /* Barra de Navegação Forçada e Visível */
+        /* BARRA DE NAVEGAÇÃO FORÇADA E VISÍVEL */
         .nav-container {
-            display: flex;
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
             gap: 15px;
             margin-bottom: 30px;
-            background: #1e293b;
+            background: #334155;
             padding: 15px;
             border-radius: 12px;
-            border: 1px solid var(--border);
+            border: 2px solid var(--accent);
             flex-wrap: wrap;
         }
         .tab-btn {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
             background: #0f172a;
-            color: var(--text-muted);
-            border: 1px solid var(--border);
+            color: #ffffff;
+            border: 2px solid var(--accent);
             padding: 12px 24px;
             border-radius: 8px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: bold;
             font-size: 15px;
             transition: all 0.2s ease;
         }
         .tab-btn.active, .tab-btn:hover {
             background: var(--accent);
             color: #0f172a;
-            border-color: var(--accent);
         }
         
         /* Controle de Páginas */
@@ -76,12 +80,12 @@
         <p class="subtitle">Análise Financeira e de Desempenho Comercial - Projeto DIO</p>
     </header>
 
-    <!-- Botões de Navegação Destacados -->
+    <!-- Botões de Navegação Forçados no Topo -->
     <div class="nav-container">
-        <button class="tab-btn active" onclick="switchPage(event, 'page1')">Visão Executiva</button>
-        <button class="tab-btn" onclick="switchPage(event, 'page2')">Produtos</button>
-        <button class="tab-btn" onclick="switchPage(event, 'page3')">Geografia</button>
-        <button class="tab-btn" onclick="switchPage(event, 'page4')">Metas e Indicadores</button>
+        <button class="tab-btn active" onclick="switchPage(event, 'page1')">1. Visão Executiva</button>
+        <button class="tab-btn" onclick="switchPage(event, 'page2')">2. Produtos</button>
+        <button class="tab-btn" onclick="switchPage(event, 'page3')">3. Geografia</button>
+        <button class="tab-btn" onclick="switchPage(event, 'page4')">4. Metas e Indicadores</button>
     </div>
 
     <!-- PÁGINA 1: Visão Executiva -->
