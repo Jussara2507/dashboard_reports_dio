@@ -16,14 +16,38 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); padding: 25px; }
-        header { margin-bottom: 25px; }
+        
+        header { margin-bottom: 20px; }
         h1 { font-size: 26px; font-weight: 600; color: var(--text-main); }
         .subtitle { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
         
-        /* Estilo dos Botões de Navegação */
-        .nav-tabs { display: flex; gap: 12px; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
-        .tab-btn { background: var(--card-bg); color: var(--text-muted); border: 1px solid var(--border); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.2s ease; }
-        .tab-btn.active, .tab-btn:hover { background: var(--accent); color: #0f172a; border-color: var(--accent); }
+        /* Barra de Navegação Forçada e Visível */
+        .nav-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: #0f172a;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--accent);
+            color: #0f172a;
+            border-color: var(--accent);
+        }
         
         /* Controle de Páginas */
         .page-content { display: none; }
@@ -37,9 +61,12 @@
         
         /* Grades de Gráficos */
         .charts-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
-        @media (max-width: 900px) { .charts-grid { grid-template-columns: 1fr; } }
-        .chart-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+        .charts-grid-equal { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 900px) { .charts-grid, .charts-grid-equal { grid-template-columns: 1fr; } }
+        
+        .chart-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; }
         .chart-title { font-size: 16px; font-weight: 600; margin-bottom: 15px; color: var(--text-main); }
+        .chart-container { position: relative; width: 100%; height: 260px; }
     </style>
 </head>
 <body>
@@ -49,8 +76,8 @@
         <p class="subtitle">Análise Financeira e de Desempenho Comercial - Projeto DIO</p>
     </header>
 
-    <!-- Botões de Navegação -->
-    <div class="nav-tabs">
+    <!-- Botões de Navegação Destacados -->
+    <div class="nav-container">
         <button class="tab-btn active" onclick="switchPage(event, 'page1')">Visão Executiva</button>
         <button class="tab-btn" onclick="switchPage(event, 'page2')">Produtos</button>
         <button class="tab-btn" onclick="switchPage(event, 'page3')">Geografia</button>
@@ -68,21 +95,25 @@
         <div class="charts-grid">
             <div class="chart-card">
                 <h3 class="chart-title">Desempenho de Vendas por Produto</h3>
-                <canvas id="productChart" height="140"></canvas>
+                <div class="chart-container"><canvas id="productChart"></canvas></div>
             </div>
             <div class="chart-card">
                 <h3 class="chart-title">Distribuição por Segmento</h3>
-                <canvas id="segmentChart" height="180"></canvas>
+                <div class="chart-container"><canvas id="segmentChart"></canvas></div>
             </div>
         </div>
     </div>
 
     <!-- PÁGINA 2: Produtos -->
     <div id="page2" class="page-content">
-        <div class="charts-grid" style="grid-template-columns: 1fr;">
+        <div class="charts-grid-equal">
             <div class="chart-card">
                 <h3 class="chart-title">Evolução Mensal de Produtos</h3>
-                <canvas id="productDetailChart" height="90"></canvas>
+                <div class="chart-container"><canvas id="productDetailChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3 class="chart-title">Participação por Categoria</h3>
+                <div class="chart-container"><canvas id="categoryChart"></canvas></div>
             </div>
         </div>
     </div>
@@ -92,23 +123,26 @@
         <div class="charts-grid" style="grid-template-columns: 1fr;">
             <div class="chart-card">
                 <h3 class="chart-title">Faturamento por Países / Regiões</h3>
-                <canvas id="geoChart" height="90"></canvas>
+                <div class="chart-container"><canvas id="geoChart"></canvas></div>
             </div>
         </div>
     </div>
 
     <!-- PÁGINA 4: Metas e Indicadores -->
     <div id="page4" class="page-content">
-        <div class="charts-grid" style="grid-template-columns: 1fr;">
+        <div class="charts-grid-equal">
             <div class="chart-card">
-                <h3 class="chart-title">Acompanhamento Estratégico</h3>
-                <p style="color: var(--text-muted); margin-top: 10px; line-height: 1.6;">Painel consolidado para acompanhamento de KPIs, metas comerciais e diretrizes operacionais do projeto.</p>
+                <h3 class="chart-title">Atingimento de Metas (%)</h3>
+                <div class="chart-container"><canvas id="goalsChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3 class="chart-title">Diretrizes Estratégicas</h3>
+                <p style="color: var(--text-muted); margin-top: 15px; line-height: 1.6;">Painel consolidado para acompanhamento de KPIs, metas comerciais e diretrizes operacionais do projeto para o portfólio da DIO.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Script de navegação entre as abas
         function switchPage(event, pageId) {
             document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -116,44 +150,60 @@
             event.currentTarget.classList.add('active');
         }
 
-        // Gráfico 1: Produtos (Página 1)
+        const commonOptions = { responsive: true, maintainAspectRatio: false };
+
         new Chart(document.getElementById('productChart'), {
             type: 'bar',
             data: {
                 labels: ['Paseo', 'VTT', 'Velo', 'Amarilla', 'Montana', 'Carretera'],
                 datasets: [{ label: 'Vendas ($)', data: [32000000, 21000000, 18500000, 17500000, 15000000, 14500000], backgroundColor: '#f59e0b', borderRadius: 4 }]
             },
-            options: { responsive: true, plugins: { legend: { display: false } } }
+            options: { ...commonOptions, plugins: { legend: { display: false } } }
         });
 
-        // Gráfico 2: Segmento (Página 1)
         new Chart(document.getElementById('segmentChart'), {
             type: 'doughnut',
             data: {
                 labels: ['Government', 'Midmarket', 'Channel Partners', 'Enterprise', 'Small Business'],
                 datasets: [{ data: [35, 22, 18, 15, 10], backgroundColor: ['#f59e0b', '#3b82f6', '#10b981', '#8b5cf6', '#ec4899'] }]
             },
-            options: { responsive: true, maintainAspectRatio: false }
+            options: { ...commonOptions, plugins: { legend: { position: 'bottom', labels: { color: '#f8fafc', boxWidth: 12 } } } }
         });
 
-        // Gráfico 3: Produtos Detalhado (Página 2)
         new Chart(document.getElementById('productDetailChart'), {
             type: 'line',
             data: {
                 labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
                 datasets: [{ label: 'Evolução ($)', data: [8e6, 9.5e6, 11e6, 10e6, 12.5e6, 14e6, 13e6, 15e6, 16.5e6, 18e6, 19.5e6, 21e6], borderColor: '#f59e0b', tension: 0.3, fill: true, backgroundColor: 'rgba(245, 158, 11, 0.05)' }]
             },
-            options: { responsive: true }
+            options: { ...commonOptions, plugins: { legend: { display: false } } }
         });
 
-        // Gráfico 4: Geografia (Página 3)
+        new Chart(document.getElementById('categoryChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Premium', 'Standard', 'Economy'],
+                datasets: [{ data: [50, 30, 20], backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'] }]
+            },
+            options: { ...commonOptions, plugins: { legend: { position: 'bottom', labels: { color: '#f8fafc', boxWidth: 12 } } } }
+        });
+
         new Chart(document.getElementById('geoChart'), {
             type: 'bar',
             data: {
                 labels: ['United States', 'Canada', 'France', 'Germany', 'Mexico'],
                 datasets: [{ label: 'Vendas ($)', data: [42e6, 25e6, 18e6, 16e6, 12e6], backgroundColor: '#3b82f6', borderRadius: 4 }]
             },
-            options: { responsive: true, plugins: { legend: { display: false } } }
+            options: { ...commonOptions, plugins: { legend: { display: false } } }
+        });
+
+        new Chart(document.getElementById('goalsChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                datasets: [{ label: 'Atingimento (%)', data: [92, 98, 105, 110], backgroundColor: '#10b981', borderRadius: 4 }]
+            },
+            options: { ...commonOptions, plugins: { legend: { display: false } } }
         });
     </script>
 </body>
